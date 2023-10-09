@@ -1,0 +1,9 @@
+body { /* parent */
+
+}
+.element { /* body */
+  background-color: 'blue'
+}
+.element p { /* element */
+  background-color: 'blue'
+}

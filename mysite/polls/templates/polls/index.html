@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+  <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--<style>
+      body { /* parent */
+          background-color: rgba(0, 41, 59, 1); margin: 0;
+          width: 100%; height: auto;
+      }
+      .element { /* body */
+          float: left;
+          width: 25%;
+          height: 65%;
+          padding-top: 5%; padding-right: 1%; padding-left: 1%;
+          padding-bottom: 5%;
+          margin-top: 2.5%; margin-right: 0%; margin-left: 15%;
+          margin-bottom: 2%;
+          background-color: rgba(1, 255, 217, 0.3);
+          border-style: solid; border-left-width: 2px;
+          border-right-width: 2px; border-top-width: 0px;
+          border-bottom-width: 0px;
+          border-radius: 1px; border-color: rgba(1, 255, 255, 1);
+      }
+      .element p { /* element */
+          width: 100%;
+          height: auto;
+          font: 5vw Open, sans-serif;
+          text-align: center;
+          color: rgba(0, 230, 255, 1);
+      }
+
+    </style> -->
+    <link rel="stylesheet" media="all" type="text/css" href="{%static 'polls/style.css' %}" />
+    <title>Signature Verification System</title>
+</head>
+<body style="background-color: #eee !important;">
+    <header id="home" style="height=18%; background-position: left; position: absolute; filter: grayscale(50%); width:100%">
+      <div style="background-color: #4d636f !important; width: 100%">
+          <div style="position: relative;">
+            <span style="font-size: 50px; color: #fff!important; ">
+            &nbsp; &nbsp; Signature Verification System
+            </span>
+          </div>
+      </div>
+    </header>
+    <!--div style="position: absolute; top:20%; height:20%">-->
+    <div class="element" style="position: absolute; top:2%; left: 13%;">
+      <img id="image1" style="display: block; position: relative; vertical-align: middle; margin-left: auto; margin-right: auto; width:100%">
+    </div>
+    <div class="element" style="top:2%; left: 62%;">
+        <img id="image2" style="display: block; position: relative; vertical-align: middle; margin-left: auto; margin-right: auto;">
+    </div>
+
+    <div style="position: absolute; top: 50%; width: 100%!important; height: 40%">
+        <form action="{% url 'imageSubmit' %}" method="get">
+        <label for="origImag" style="position:absolute; left: 20%; top: 5px; display: block; font: 1rem 'Fira Sans', sans-serif; font-size: 1em;">Select Original Signature</label>
+        <input type="file" id="origImag" onchange="readURL(this,'image1');" id="myFile" name="p" style="position: absolute; left:20%; top: 20%">
+        <input type="submit" onClick="return validateAndSubmit('origImag','image1','testImag','image2');" value="Verify Signature" style="position: absolute; left: 44%; top: 70%; width: 15em; height: 4em;">
+        <label for="testImag" style="position:absolute; left: 68%; top: 5px; display: block; font: 1rem 'Fira Sans', sans-serif; font-size: 1em;">Select Test Signature</label>
+        <input type="file" id="testImag" onchange="readURL(this,'image2');" id="myFile2" name="q" style="position: absolute; left:68%; top: 20%" >
+    </div>
+    <script>
+      function validateAndSubmit(idnum1,imagenum1,idnum2,imagenum2){
+        if(document.getElementById(idnum1).files[0]!==undefined && document.getElementById(idnum2).files[0]!==undefined){
+          var x = document.getElementById(idnum1).files[0].name;
+          document.getElementById(imagenum1).innerHTML = x;
+          console.log(x);
+        }
+        else if(document.getElementById(idnum1).files[0]===undefined && document.getElementById(idnum2).files[0]===undefined){
+          alert("Please select two images.");
+          window.location.replace("#");
+          return false;
+        }
+        else if(document.getElementById(idnum1).files[0]===undefined){
+            alert("Please select the first image.");
+            window.location.replace("#");
+            return false;
+        }
+        else{
+          alert("Please select the second image.");
+          window.location.replace("#");
+          return false;
+        }
+    }
+      function readURL(input,image) {
+              if (input.files && input.files[0]) {
+                  var reader = new FileReader();
+
+                  reader.onload = function (e) {
+                    console.log(e);
+                    console.log(image);
+                      $('#'+image)
+                          .attr('src', e.target.result)
+                          .width('100%')
+                          .height('100%');
+                  };
+
+                  reader.readAsDataURL(input.files[0]);
+              }
+          }
+
+    </script>
+
+   </form>
+   <!--div class="element">
+     <form action="{% url 'imageSubmit' %}" method="get"-->
+
+
+
+
+
+   <!--/form>
+
+    </div>
+
+
+
+
+  <!--
+    <div class="element">
+        <p>Apps</p>
+    </div>-->
+</body>
+</html>
